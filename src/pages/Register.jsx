@@ -6,6 +6,7 @@ import api from '../api/axios';
 import { toast } from 'react-toastify';
 import { FiMail, FiLock, FiUser } from 'react-icons/fi';
 
+//A16 (Register Page: New user creation, email availability check, and automatic login flow handle cheyyunnu)
 const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');

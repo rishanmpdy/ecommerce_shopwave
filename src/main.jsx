@@ -18,13 +18,14 @@ const queryClient = new QueryClient({
   },
 });
 
+//A1 (Application Entry Point: React root render cheyyukayum essential providers like Redux, React Query, and Router setup cheyyukayum cheyyunnu)
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
           <App />
-          <ToastContainer position="bottom-left" autoClose={9000} />
+          <ToastContainer position="bottom-left" autoClose={2000} />
         </Provider>
       </QueryClientProvider>
     </BrowserRouter>

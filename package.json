@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "server": "node server.js",
-    "start:all": "concurrently --kill-others-on-fail false \"npm run dev\" \"npm run server\""
+    "start:all": "concurrently --kill-others \"npm run dev\" \"npm run server\""
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.11.2",

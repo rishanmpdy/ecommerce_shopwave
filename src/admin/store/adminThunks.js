@@ -1,5 +1,8 @@
 import { loginStart, loginSuccess, loginFailure } from "./adminSlice";
-import { adminLoginApi } from "../services/adminServices";
+import adminApi from "../adminShared";
+
+// Admin login API call (Moved from services)
+const adminLoginApi = (credentials) => adminApi.post("/admin/login", credentials);
 
 export const adminLogin = (credentials) => async (dispatch) => {
   dispatch(loginStart());

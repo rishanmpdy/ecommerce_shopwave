@@ -7,11 +7,8 @@ function TodoList() {
   useEffect(() => {
     fetch("https://dummyjson.com/todos")
       .then((res) => res.json())
-      .then((data) => {
-        setTodos(data.todos);
-
+      .then((data) => {setTodos(data.todos); 
         const filtered = data.todos.filter((item) => item.completed === true);
-
         setCompletedTodos(filtered);
       })
       .catch((err) => console.error(err));

@@ -1,155 +1,78 @@
 import jsonServer from 'json-server';
-import jwt from 'jsonwebtoken';
 import cors from 'cors';
+
+// Simplified Backend Server for Learning
+// JWT Auth and Security have been removed so you can focus on React/Redux logic.
 
 const server = jsonServer.create();
 const router = jsonServer.router('db.json');
 const middlewares = jsonServer.defaults();
 
-const SECRET_KEY = 'YOUR_SECRET_KEY_HERE';
-const expiresIn = '24h';
-
-// Manglish: admin login success aayal JWT token create cheyyan helper.
-function createToken(payload) {
-  return jwt.sign(payload, SECRET_KEY, { expiresIn });
-}
-
-// Manglish: request-il vann token valid aano ennu verify cheyyan helper.
-function verifyToken(token) {
-  try {
-    return jwt.verify(token, SECRET_KEY);
-  } catch (err) {
-    console.error(`[AUTH ERROR] Token verification failed: ${err.message}`);
-    throw err;
-  }
-}
-
+// --- 1. CORE MIDDLEWARES ---
 server.use(cors());
 server.use(jsonServer.bodyParser);
-
-// 1. Logger Middleware - MOVE TO VERY TOP
-server.use((req, res, next) => {
-    console.log(`[DEBUG] ${req.method} ${req.url}`);
-    next();
-});
-
-// TEST ROUTE
-server.get('/test', (req, res) => res.send('Server is alive!'));
-
 server.use(middlewares);
 
-// Manglish: normal json-server login cheyyilla; athukondu custom admin login endpoint create cheythittundu.
-server.post('/api/admin/login', (req, res) => {
+// --- 2. MOCK LOGIN HANDLER (Simplified) ---
+server.post(['/api/admin/login', '/login'], (req, res) => {
+  // Request body-il ninnu email-um password-um edukkunnu.
   const { email, password } = req.body;
   const db = router.db;
-  const users = db.get('users').value();
-  
-  const user = users.find(u => u.email === email && u.password === password);
-  
-  if (!user) {
+  // Database-il ee details matching aaya user undo ennu check cheyyunnu.
+  const user = db.get('users').find({ email, password }).value();
+
+  if (user) {
+    console.log('[LOGIN SUCCESS] User:', user.email);
+    // User undengil "fake-token" thirichu ayakkunnu (Security bypass for learning).
+    return res.status(200).json({
+      token: 'fake-token-for-learning',
+      admin: user,
+      user: user
+    });
+  } else {
+    // User illengil 401 error ayakkunnu.
     return res.status(401).json({ message: 'Invalid email or password' });
   }
-  
-  if (user.role !== 'admin') {
-    return res.status(403).json({ message: 'Access denied. Account is not an admin.' });
-  }
-
-  const token = createToken({ id: user.id, email: user.email, role: user.role });
-  
-  res.status(200).json({
-    token,
-    admin: {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      role: user.role
-    }
-  });
 });
 
-// Manglish: /api/admin route ellam ivide protect cheyyunnu.
-// Token verify cheythu kazhinjal url /products pole json-server readable format-il rewrite cheyyum.
+// --- 3. DASHBOARD STATS & URL REWRITING ---
 server.use((req, res, next) => {
-  if (req.url.startsWith('/api/admin')) {
-    if (req.method === 'OPTIONS') return next();
-    if (req.url === '/api/admin/login') return next();
+  // 1. Handle Dashboard Stats (Simplified calculation)
+  // Dashboard stats-nu vendulla special route handle cheyyunnu.
+  if (req.url.includes('/dashboard/stats')) {
+    const db = router.db;
+    const users = db.get('users').value() || [];
+    const orders = db.get('orders').value() || [];
 
-    const authHeader = req.headers.authorization;
-    console.log(`[DEBUG ADMIN API] ${req.method} ${req.url} | Auth Header: ${authHeader ? 'Present (' + authHeader.slice(0, 15) + '...)' : 'MISSING'}`);
-    
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      console.warn(`[AUTH WARN] Admin token missing header: ${req.method} ${req.url}`);
-      return res.status(401).json({ message: 'Authentication required: Admin token missing.' });
-    }
+    // Products, Orders, Users, and Revenue counts calculate cheyyunnu.
+    const recentOrdersWithUser = orders.slice(-5).map(order => ({
+      ...order,
+      user: users.find(u => u.id === order.userId) || { name: 'Guest' }
+    }));
 
-    let decoded;
-    try {
-      const token = authHeader.split(' ')[1];
-      decoded = verifyToken(token);
-      
-      if (decoded.role !== 'admin') {
-        console.warn(`[AUTH WARN] Forbidden access (not admin): ${decoded.email}`);
-        return res.status(403).json({ message: 'Access denied: Admin privileges required.' });
-      }
-    } catch (err) {
-      console.error(`[AUTH ERROR] JWT verification failed: ${err.message}`);
-      return res.status(401).json({ message: 'Invalid or expired session. Please login again.' });
-    }
-
-    // Manglish: dashboard cardsinum recent orders table-inum vendi custom aggregate response.
-    if (req.url === '/api/admin/dashboard/stats') {
-        const db = router.db;
-        const users = db.get('users').value() || [];
-        const orders = db.get('orders').value() || [];
-        const recentOrders = orders
-          .slice()
-          .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))
-          .slice(0, 5)
-          .map((order) => ({
-            id: order.id,
-            totalAmount: order.total ?? 0,
-            status: String(order.status || "processing").toLowerCase(),
-            createdAt: order.date,
-            user: users.find((u) => String(u.id) === String(order.userId)) || null,
-          }));
-
-        return res.json({
-            totalProducts: db.get('products').size().value() || 0,
-            totalOrders: db.get('orders').size().value() || 0,
-            totalUsers: db.get('users').size().value() || 0,
-            totalRevenue: orders.reduce((sum, order) => sum + Number(order.total || 0), 0),
-            recentOrders
-        });
-    }
-
-    // Manglish: Categories API force handling (Only for GET)
-    if (req.url === '/api/admin/categories' && req.method === 'GET') {
-        const data = router.db.get('categories').value() || [];
-        return res.json(data);
-    }
-    
-    // Manglish: Carts API force handling (Only for GET)
-    if (req.url === '/api/admin/carts' && req.method === 'GET') {
-        const data = router.db.get('carts').value() || [];
-        return res.json(data);
-    }
-
-    // Manglish: /api/admin/products -> /products aakki json-server router-lekku വിടും.
-    req.url = req.url.replace('/api/admin', '');
-    next();
-  } else {
-    // Manglish: public/user routes direct aayi json-server router-il പോകും.
-    next();
+    return res.json({
+      totalProducts: db.get('products').size().value(),
+      totalOrders: orders.length,
+      totalUsers: users.length,
+      totalRevenue: orders.reduce((s, o) => s + Number(o.total || 0), 0),
+      recentOrders: recentOrdersWithUser
+    });
   }
+
+  // 2. Remove /api/admin prefix so it works with standard json-server routes
+  // Frontend-ile admin routes json-server standard format-ilekku rewrite cheyyunnu.
+  if (req.url.startsWith('/api/admin')) {
+    req.url = req.url.replace('/api/admin', '');
+  }
+  next();
 });
 
-// Remove these old handlers as they are now handled above inside the auth/prefix block
-
-// 4. Default JSON Server Router
+// --- 4. JSON-SERVER ROUTER ---
 server.use(router);
 
-server.listen(5005, () => {
-  console.log('\x1b[32m%s\x1b[0m', 'Custom JSON Server (ShopWave Admin) is active!');
-  console.log('\x1b[36m%s\x1b[0m', 'ADMIN API: http://localhost:5005/api/admin');
-  console.log('\x1b[36m%s\x1b[0m', 'USER API:  http://localhost:5005');
+const PORT = 5006;
+server.listen(PORT, () => {
+  console.log(`\x1b[32m[SERVER] Simplified Server running on http://localhost:${PORT}\x1b[0m`);
+  console.log(`\x1b[33m[INFO] Security/JWT checks are DISABLED for learning purposes.\x1b[0m`);
 });
+

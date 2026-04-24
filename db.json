@@ -5,6 +5,32 @@
       "id": "cat1"
     }
   ],
+  "subcategories": [
+    {
+      "name": "Running Shoes",
+      "id": "sub1"
+    },
+    {
+      "id": "sub2",
+      "name": "Formal Shoes",
+      "categoryId": "cat1"
+    },
+    {
+      "id": "sub3",
+      "name": "Boots",
+      "categoryId": "cat1"
+    },
+    {
+      "id": "sub4",
+      "name": "Sandals",
+      "categoryId": "cat1"
+    },
+    {
+      "id": "sub5",
+      "name": "Slippers",
+      "categoryId": "cat1"
+    }
+  ],
   "users": [
     {
       "id": "admin-1",
@@ -22,7 +48,8 @@
       "password": "password",
       "role": "user",
       "createdAt": "2024-01-01",
-      "phone": ""
+      "phone": "",
+      "isActive": true
     },
     {
       "id": "2",
@@ -30,7 +57,8 @@
       "email": "rishanmpdy@gmail.com",
       "password": "12345",
       "role": "user",
-      "createdAt": "2024-01-05"
+      "createdAt": "2024-01-05",
+      "isActive": true
     },
     {
       "id": "1776314551008",
@@ -38,7 +66,8 @@
       "email": "rishan@gmail.com",
       "password": "rishan@gmail.com",
       "role": "user",
-      "createdAt": "2026-04-16"
+      "createdAt": "2026-04-16",
+      "isActive": true
     },
     {
       "id": "1776444777806",
@@ -46,7 +75,8 @@
       "email": "test@gmail.com",
       "password": "test",
       "role": "user",
-      "createdAt": "2026-04-17"
+      "createdAt": "2026-04-17",
+      "isActive": true
     },
     {
       "id": "1776770382931",
@@ -54,7 +84,8 @@
       "email": "admin@gmail.com",
       "password": "R1234#",
       "role": "admin",
-      "createdAt": "2026-04-21"
+      "createdAt": "2026-04-21",
+      "isActive": true
     },
     {
       "id": "1776770592402",
@@ -62,7 +93,8 @@
       "email": "new_unique_user@gmail.com",
       "password": "R1234#password123",
       "role": "admin",
-      "createdAt": "2026-04-21"
+      "createdAt": "2026-04-21",
+      "isActive": true
     }
   ],
   "products": [
@@ -72,7 +104,7 @@
       "price": 1111,
       "originalPrice": 150,
       "category": "Footwear",
-      "subCategory": "Running Shoes",
+      "subCategory": "Formal Shoes",
       "brand": "Nike",
       "rating": 4.5,
       "stock": 80,
@@ -93,7 +125,7 @@
       "price": 843,
       "originalPrice": 200,
       "category": "Footwear",
-      "subCategory": "Running Shoes",
+      "subCategory": "Boots",
       "brand": "Adidas",
       "rating": 4.6,
       "stock": 55,
@@ -111,38 +143,37 @@
     {
       "id": "p3",
       "name": "Puma Velocity Nitro",
-      "price": 109.99,
+      "price": 1095,
       "originalPrice": 135,
       "category": "Footwear",
-      "subCategory": "Running Shoes",
+      "subCategory": "Formal Shoes",
       "brand": "Puma",
       "rating": 4.4,
       "stock": 65,
       "description": "Nitrogen-infused foam sole for explosive speed and comfort on every run.",
       "images": [
-        "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=800&q=80",
-        "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=800&q=80"
+        "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=800&q=80"
       ],
       "tags": [
         "running",
         "speed",
         "puma"
-      ]
+      ],
+      "_id": "p3"
     },
     {
       "id": "p4",
       "name": "Reebok Floatride Energy",
-      "price": 99.99,
+      "price": 9399,
       "originalPrice": 120,
       "category": "Footwear",
-      "subCategory": "Running Shoes",
+      "subCategory": "Slippers",
       "brand": "Reebok",
       "rating": 4.3,
       "stock": 45,
       "description": "Ultra-light running shoe with Floatride foam for a barely-there feel.",
       "images": [
-        "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=800&q=80",
-        "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=800&q=80"
+        "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=800&q=80"
       ],
       "tags": [
         "running",
@@ -174,23 +205,23 @@
     {
       "id": "p6",
       "name": "Asics Gel-Nimbus 25",
-      "price": 149.99,
+      "price": 1445,
       "originalPrice": 175,
       "category": "Footwear",
-      "subCategory": "Running Shoes",
+      "subCategory": "Slippers",
       "brand": "Asics",
       "rating": 4.6,
       "stock": 42,
       "description": "Legendary Gel cushioning with FF Blast+ for the ultimate long-distance run.",
       "images": [
-        "https://images.unsplash.com/photo-1562183241-840b8af0721e?w=800&q=80",
-        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80"
+        "https://images.unsplash.com/photo-1562183241-840b8af0721e?w=800&q=80"
       ],
       "tags": [
         "running",
         "gel",
         "long-distance"
-      ]
+      ],
+      "_id": "p6"
     },
     {
       "id": "p7",
@@ -363,17 +394,16 @@
     {
       "id": "p15",
       "name": "Puma Casual Sneakers",
-      "price": 89.99,
+      "price": 8999,
       "originalPrice": 120,
       "category": "Footwear",
-      "subCategory": "Casual Shoes",
+      "subCategory": "Sandals",
       "brand": "Puma",
       "rating": 4.3,
       "stock": 70,
       "description": "Versatile everyday casual shoe with cushioned sole for all-day comfort.",
       "images": [
-        "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=800&q=80",
-        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80"
+        "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=800&q=80"
       ],
       "tags": [
         "casual",
@@ -405,17 +435,16 @@
     {
       "id": "p17",
       "name": "Converse Chuck Taylor All Star",
-      "price": 69.99,
+      "price": 6999,
       "originalPrice": 85,
       "category": "Footwear",
-      "subCategory": "Casual Shoes",
+      "subCategory": "Boots",
       "brand": "Converse",
       "rating": 4.4,
       "stock": 110,
       "description": "The original canvas high-top sneaker, a cultural icon since 1917.",
       "images": [
-        "https://images.unsplash.com/photo-1467043237213-65f2da53396f?w=800&q=80",
-        "https://images.unsplash.com/photo-1494496195158-c3becb4f2475?w=800&q=80"
+        "https://images.unsplash.com/photo-1467043237213-65f2da53396f?w=800&q=80"
       ],
       "tags": [
         "casual",
@@ -447,17 +476,16 @@
     {
       "id": "p19",
       "name": "Red Tape Loafer Slip-On",
-      "price": 79.99,
+      "price": 799,
       "originalPrice": 100,
       "category": "Footwear",
-      "subCategory": "Loafers",
+      "subCategory": "Boots",
       "brand": "Red Tape",
       "rating": 4.2,
       "stock": 60,
       "description": "Smooth leather loafer with penny keeper strap and cushioned footbed.",
       "images": [
-        "https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=800&q=80",
-        "https://images.unsplash.com/photo-1614252235316-84d412cc2b37?w=800&q=80"
+        "https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=800&q=80"
       ],
       "tags": [
         "easy-wear",
@@ -510,23 +538,23 @@
     {
       "id": "p22",
       "name": "Metro Women High Heels",
-      "price": 69.99,
+      "price": 699,
       "originalPrice": 90,
       "category": "Footwear",
-      "subCategory": "Heels",
+      "subCategory": "Boots",
       "brand": "Metro",
       "rating": 4.3,
       "stock": 50,
       "description": "Elegant pointed-toe stiletto heels with padded insole for party occasions.",
       "images": [
-        "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=800&q=80",
-        "https://images.unsplash.com/photo-1515347619252-7e61e06def04?w=800&q=80"
+        "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=800&q=80"
       ],
       "tags": [
         "fashion",
         "party",
         "heels"
-      ]
+      ],
+      "_id": "p22"
     },
     {
       "id": "p23",
@@ -615,7 +643,7 @@
     {
       "id": "p27",
       "name": "Havaianas Brazil Flip Flops",
-      "price": 24.99,
+      "price": 2199,
       "originalPrice": 35,
       "category": "Footwear",
       "subCategory": "Sandals",
@@ -624,14 +652,14 @@
       "stock": 200,
       "description": "Brazil's most beloved rubber flip flop with textured rice-grain footbed.",
       "images": [
-        "https://rukminim2.flixcart.com/image/1366/1366/xif0q/slipper-flip-flop/l/o/z/8-men-s-ortho-sldides-open-toe-slip-on-sandals-with-soft-sole-8-original-imahk2w94ygamv56.jpeg?q=90",
         "https://rukminim2.flixcart.com/image/1366/1366/xif0q/slipper-flip-flop/l/o/z/8-men-s-ortho-sldides-open-toe-slip-on-sandals-with-soft-sole-8-original-imahk2w94ygamv56.jpeg?q=90"
       ],
       "tags": [
         "beach",
         "summer",
         "lightweight"
-      ]
+      ],
+      "_id": "p27"
     },
     {
       "id": "p28",
@@ -678,7 +706,7 @@
     {
       "id": "p30",
       "name": "Paragon Slicker Slippers",
-      "price": 14.99,
+      "price": 14199,
       "originalPrice": 20,
       "category": "Footwear",
       "subCategory": "Slippers",
@@ -687,19 +715,19 @@
       "stock": 180,
       "description": "Anti-skid sole slippers with soft cushioned upper — great for indoor use.",
       "images": [
-        "https://rukminim2.flixcart.com/image/180/240/xif0q/sandal/r/o/j/10-n-6057-10-killer-grey-original-imahex8xtkmpzsnk.jpeg?q=90",
         "https://rukminim2.flixcart.com/image/180/240/xif0q/sandal/r/o/j/10-n-6057-10-killer-grey-original-imahex8xtkmpzsnk.jpeg?q=90"
       ],
       "tags": [
         "indoor",
         "anti-skid",
         "budget"
-      ]
+      ],
+      "_id": "p30"
     },
     {
       "id": "p31",
       "name": "UGG Classic Mini Boot Slipper",
-      "price": 79.99,
+      "price": 799,
       "originalPrice": 100,
       "category": "Footwear",
       "subCategory": "Slippers",
@@ -708,8 +736,7 @@
       "stock": 35,
       "description": "Shearling-lined cozy slipper boot with suede upper for indoor luxury.",
       "images": [
-        "http://laceon.in/cdn/shop/files/Photoroom_20250121_131805.jpg?v=1737446123&width=1500",
-        "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=80"
+        "http://laceon.in/cdn/shop/files/Photoroom_20250121_131805.jpg?v=1737446123&width=1500"
       ],
       "tags": [
         "cozy",
@@ -720,80 +747,79 @@
     {
       "id": "p32",
       "name": "Kolhapuri Ethnic Sandals",
-      "price": 39.99,
+      "price": 399,
       "originalPrice": 55,
       "category": "Footwear",
-      "subCategory": "Ethnic",
+      "subCategory": "Boots",
       "brand": "Local",
       "rating": 4,
       "stock": 80,
       "description": "Handcrafted vegetable-tanned leather Kolhapuri chappal with traditional embossing.",
       "images": [
-        "https://rukminim2.flixcart.com/image/612/612/xif0q/sandal/t/s/i/3-pc96708-36-padchin-rose-gold-original-imahbvcug8j2gwvp.jpeg?q=70",
         "https://rukminim2.flixcart.com/image/612/612/xif0q/sandal/t/s/i/3-pc96708-36-padchin-rose-gold-original-imahbvcug8j2gwvp.jpeg?q=70"
       ],
       "tags": [
         "traditional",
         "handmade",
         "ethnic"
-      ]
+      ],
+      "_id": "p32"
     },
     {
       "id": "p33",
       "name": "Mojari Embroidered Juttis",
-      "price": 44.99,
+      "price": 4499,
       "originalPrice": 60,
       "category": "Footwear",
-      "subCategory": "Ethnic",
+      "subCategory": "Sandals",
       "brand": "Rajasthani Craft",
       "rating": 4.2,
       "stock": 65,
       "description": "Handstitched leather juttis with zari embroidery — a Rajasthani craft tradition.",
       "images": [
-        "https://rukminim2.flixcart.com/image/1366/1366/xif0q/shoe/4/1/y/8-jt-14-pista-41-0-jm-looks-pista-original-imahfxfggzxcegaf.jpeg?q=90",
         "https://rukminim2.flixcart.com/image/1366/1366/xif0q/shoe/4/1/y/8-jt-14-pista-41-0-jm-looks-pista-original-imahfxfggzxcegaf.jpeg?q=90"
       ],
       "tags": [
         "jutti",
         "embroidered",
         "rajasthani"
-      ]
+      ],
+      "_id": "p33"
     },
     {
       "id": "p34",
       "name": "Padukas Wooden Sandals",
-      "price": 34.99,
+      "price": 399,
       "originalPrice": 48,
       "category": "Footwear",
-      "subCategory": "Ethnic",
+      "subCategory": "Formal Shoes",
       "brand": "Artisan India",
       "rating": 4.1,
       "stock": 40,
       "description": "Traditional wooden toe-knob sandals hand-painted with floral motifs.",
       "images": [
-        "https://images.unsplash.com/photo-1603487742131-4160ec999306?w=800&q=80",
-        "https://images.unsplash.com/photo-1620012253295-c1590e0483d5?w=800&q=80"
+        "https://images.unsplash.com/photo-1603487742131-4160ec999306?w=800&q=80"
       ],
       "tags": [
         "wooden",
         "traditional",
         "handpainted"
-      ]
+      ],
+      "_id": "p34"
     },
     {
       "id": "p35",
       "name": "Nike Mercurial Vapor Football Cleats",
-      "price": 199.99,
+      "price": 1999,
       "originalPrice": 240,
       "category": "Footwear",
-      "subCategory": "Sports Shoes",
+      "subCategory": "Boots",
       "brand": "Nike",
       "rating": 4.7,
       "stock": 28,
       "description": "Ultra-lightweight football boot with Flyknit upper and conical studs for explosive play.",
       "images": [
-        "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&q=80",
-        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80"
+        "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&q=80"
       ],
       "tags": [
         "football",
@@ -804,38 +830,37 @@
     {
       "id": "p36",
       "name": "Adidas Copa Mundial",
-      "price": 159.99,
+      "price": 1590,
       "originalPrice": 190,
       "category": "Footwear",
-      "subCategory": "Sports Shoes",
+      "subCategory": "Formal Shoes",
       "brand": "Adidas",
       "rating": 4.6,
       "stock": 22,
       "description": "Legendary full-grain leather football boot with direct-injected outsole.",
       "images": [
-        "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&q=80",
-        "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=800&q=80"
+        "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&q=80"
       ],
       "tags": [
         "football",
         "leather",
         "legendary"
-      ]
+      ],
+      "_id": "p36"
     },
     {
       "id": "p37",
       "name": "Yonex Court Ace Tennis Shoe",
-      "price": 89.99,
+      "price": 899,
       "originalPrice": 110,
       "category": "Footwear",
-      "subCategory": "Sports Shoes",
+      "subCategory": "Sandals",
       "brand": "Yonex",
       "rating": 4.4,
       "stock": 50,
       "description": "Non-marking rubber sole with Power Cushion technology for court sports.",
       "images": [
-        "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=800&q=80",
-        "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&q=80"
+        "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=800&q=80"
       ],
       "tags": [
         "tennis",
@@ -869,51 +894,62 @@
     {
       "id": "1776055275332",
       "userId": "1",
+      "items": []
+    },
+    {
+      "id": "1776925737659",
+      "userId": "1",
       "items": [
         {
           "product": {
-            "id": "p3",
-            "name": "Puma Velocity Nitro",
-            "price": 109.99,
-            "originalPrice": 135,
+            "id": "p1",
+            "name": "Nike Air Max 270",
+            "price": 1111,
+            "originalPrice": 150,
             "category": "Footwear",
             "subCategory": "Running Shoes",
-            "brand": "Puma",
-            "rating": 4.4,
-            "stock": 65,
-            "description": "Nitrogen-infused foam sole for explosive speed and comfort on every run.",
+            "brand": "Nike",
+            "rating": 4.5,
+            "stock": 80,
+            "description": "Lightweight running shoes with Air Max cushioning for all-day comfort.",
             "images": [
-              "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=800&q=80",
-              "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=800&q=80"
+              "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80"
             ],
             "tags": [
               "running",
-              "speed",
-              "puma"
-            ]
+              "comfort",
+              "nike"
+            ],
+            "_id": "p1"
           },
           "quantity": 1
-        },
+        }
+      ]
+    },
+    {
+      "id": "1776926547826",
+      "userId": "1",
+      "items": [
         {
           "product": {
-            "id": "p9",
-            "name": "Red Tape Derby Formal",
-            "price": 89.99,
-            "originalPrice": 115,
+            "id": "p25",
+            "name": "Crocs Classic Pool Slide",
+            "price": 49.99,
+            "originalPrice": 70,
             "category": "Footwear",
-            "subCategory": "Formal Shoes",
-            "brand": "Red Tape",
-            "rating": 4.2,
-            "stock": 50,
-            "description": "Polished derby formal shoe with memory foam insole for all-day wear.",
+            "subCategory": "Sandals",
+            "brand": "Crocs",
+            "rating": 4.5,
+            "stock": 90,
+            "description": "Lightweight, water-friendly slide with iconic Croslite cushion sole.",
             "images": [
-              "https://images.unsplash.com/photo-1604163546180-039a1781c0d2?w=800&q=80",
-              "https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=800&q=80"
+              "https://images.unsplash.com/photo-1603487742131-4160ec999306?w=800&q=80",
+              "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80"
             ],
             "tags": [
-              "formal",
-              "derby",
-              "office"
+              "comfort",
+              "waterproof",
+              "casual"
             ]
           },
           "quantity": 1
@@ -972,7 +1008,7 @@
         }
       ],
       "total": 626.3352000000001,
-      "status": "delivered",
+      "status": "processing",
       "date": "2026-04-13T10:39:34.827Z"
     },
     {
@@ -1003,7 +1039,7 @@
         }
       ],
       "total": 140.38920000000002,
-      "status": "shipped",
+      "status": "cancelled",
       "date": "2026-04-13T10:56:32.316Z"
     },
     {
@@ -1065,7 +1101,7 @@
         }
       ],
       "total": 140.38920000000002,
-      "status": "pending",
+      "status": "delivered",
       "date": "2026-04-13T11:05:39.550Z"
     },
     {
@@ -1138,7 +1174,7 @@
         }
       ],
       "total": 140.38920000000002,
-      "status": "Processing",
+      "status": "shipped",
       "date": "2026-04-13T11:20:38.668Z",
       "shippingAddress": {
         "id": 0,
@@ -4048,7 +4084,7 @@
         }
       ],
       "total": 75.58919999999999,
-      "status": "Processing",
+      "status": "shipped",
       "date": "2026-04-18T04:48:26.673Z",
       "shippingAddress": {
         "id": 0,
@@ -4092,7 +4128,7 @@
         }
       ],
       "total": 140.38920000000002,
-      "status": "Processing",
+      "status": "delivered",
       "date": "2026-04-18T04:54:42.062Z",
       "shippingAddress": {
         "id": 0,
@@ -4136,7 +4172,7 @@
         }
       ],
       "total": 118.7892,
-      "status": "Processing",
+      "status": "delivered",
       "date": "2026-04-18T04:55:03.242Z",
       "shippingAddress": {
         "id": 0,
@@ -4180,7 +4216,7 @@
         }
       ],
       "total": 194.38920000000002,
-      "status": "Processing",
+      "status": "cancelled",
       "date": "2026-04-18T04:55:21.723Z",
       "shippingAddress": {
         "id": 0,
@@ -4424,7 +4460,7 @@
         }
       ],
       "total": 140.38920000000002,
-      "status": "Processing",
+      "status": "delivered",
       "date": "2026-04-18T08:45:09.923Z",
       "shippingAddress": {
         "id": 0,
@@ -5676,7 +5712,7 @@
         }
       ],
       "total": 1123.1136000000001,
-      "status": "delivered",
+      "status": "cancelled",
       "date": "2026-04-20T09:27:04.518Z",
       "shippingAddress": {
         "id": 2,
@@ -5777,6 +5813,270 @@
         "zip": "5656"
       },
       "paymentMethod": "cod"
+    },
+    {
+      "id": "1776925746858",
+      "userId": "1",
+      "items": [
+        {
+          "product": {
+            "id": "p1",
+            "name": "Nike Air Max 270",
+            "price": 1111,
+            "originalPrice": 150,
+            "category": "Footwear",
+            "subCategory": "Running Shoes",
+            "brand": "Nike",
+            "rating": 4.5,
+            "stock": 80,
+            "description": "Lightweight running shoes with Air Max cushioning for all-day comfort.",
+            "images": [
+              "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80"
+            ],
+            "tags": [
+              "running",
+              "comfort",
+              "nike"
+            ],
+            "_id": "p1"
+          },
+          "quantity": 1
+        }
+      ],
+      "total": 1199.88,
+      "status": "Processing",
+      "date": "2026-04-23T06:29:06.858Z",
+      "shippingAddress": {
+        "id": 0,
+        "title": "Home",
+        "firstName": "User",
+        "lastName": "",
+        "address": "",
+        "city": "",
+        "state": "",
+        "zip": ""
+      },
+      "paymentMethod": "upi"
+    },
+    {
+      "id": "1776926558914",
+      "userId": "1",
+      "items": [
+        {
+          "product": {
+            "id": "p25",
+            "name": "Crocs Classic Pool Slide",
+            "price": 49.99,
+            "originalPrice": 70,
+            "category": "Footwear",
+            "subCategory": "Sandals",
+            "brand": "Crocs",
+            "rating": 4.5,
+            "stock": 90,
+            "description": "Lightweight, water-friendly slide with iconic Croslite cushion sole.",
+            "images": [
+              "https://images.unsplash.com/photo-1603487742131-4160ec999306?w=800&q=80",
+              "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80"
+            ],
+            "tags": [
+              "comfort",
+              "waterproof",
+              "casual"
+            ]
+          },
+          "quantity": 1
+        }
+      ],
+      "total": 53.989200000000004,
+      "status": "Processing",
+      "date": "2026-04-23T06:42:38.914Z",
+      "shippingAddress": {
+        "id": 0,
+        "title": "Home",
+        "firstName": "User",
+        "lastName": "",
+        "address": "",
+        "city": "",
+        "state": "",
+        "zip": ""
+      },
+      "paymentMethod": "cod"
+    },
+    {
+      "id": "1776928547014",
+      "userId": "1",
+      "items": [
+        {
+          "product": {
+            "id": "p1",
+            "name": "Nike Air Max 270",
+            "price": 1111,
+            "originalPrice": 150,
+            "category": "Footwear",
+            "subCategory": "Running Shoes",
+            "brand": "Nike",
+            "rating": 4.5,
+            "stock": 80,
+            "description": "Lightweight running shoes with Air Max cushioning for all-day comfort.",
+            "images": [
+              "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80"
+            ],
+            "tags": [
+              "running",
+              "comfort",
+              "nike"
+            ],
+            "_id": "p1"
+          },
+          "quantity": 4
+        }
+      ],
+      "total": 4799.52,
+      "status": "shipped",
+      "date": "2026-04-23T07:15:47.014Z",
+      "shippingAddress": {
+        "id": 0,
+        "title": "Home",
+        "firstName": "User",
+        "lastName": "er",
+        "address": "ere",
+        "city": "rffer",
+        "state": "reer",
+        "zip": "5656"
+      },
+      "paymentMethod": "cod"
+    },
+    {
+      "id": "1777010628762",
+      "userId": "1",
+      "items": [
+        {
+          "product": {
+            "id": "p1",
+            "name": "Nike Air Max 270",
+            "price": 1111,
+            "originalPrice": 150,
+            "category": "Footwear",
+            "subCategory": "Running Shoes",
+            "brand": "Nike",
+            "rating": 4.5,
+            "stock": 80,
+            "description": "Lightweight running shoes with Air Max cushioning for all-day comfort.",
+            "images": [
+              "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80"
+            ],
+            "tags": [
+              "running",
+              "comfort",
+              "nike"
+            ],
+            "_id": "p1"
+          },
+          "quantity": 1
+        }
+      ],
+      "total": 1199.88,
+      "status": "delivered",
+      "date": "2026-04-24T06:03:48.762Z",
+      "shippingAddress": {
+        "id": 0,
+        "title": "Home",
+        "firstName": "User",
+        "lastName": "er",
+        "address": "ere",
+        "city": "rffer",
+        "state": "reer",
+        "zip": "5656"
+      },
+      "paymentMethod": "upi"
+    },
+    {
+      "id": "1777011774739",
+      "userId": "1",
+      "items": [
+        {
+          "product": {
+            "id": "p1",
+            "name": "Nike Air Max 270",
+            "price": 1111,
+            "originalPrice": 150,
+            "category": "Footwear",
+            "subCategory": "Formal Shoes",
+            "brand": "Nike",
+            "rating": 4.5,
+            "stock": 80,
+            "description": "Lightweight running shoes with Air Max cushioning for all-day comfort.",
+            "images": [
+              "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80"
+            ],
+            "tags": [
+              "running",
+              "comfort",
+              "nike"
+            ],
+            "_id": "p1"
+          },
+          "quantity": 1
+        }
+      ],
+      "total": 1199.88,
+      "status": "Processing",
+      "date": "2026-04-24T06:22:54.739Z",
+      "shippingAddress": {
+        "id": 1,
+        "title": "Home",
+        "firstName": "Rishan",
+        "lastName": "k",
+        "address": "adress",
+        "city": "manjeri",
+        "state": "kerala",
+        "zip": "83843"
+      },
+      "paymentMethod": "upi"
+    },
+    {
+      "id": "1777012607470",
+      "userId": "1",
+      "items": [
+        {
+          "product": {
+            "id": "p2",
+            "name": "Adidas Ultraboost 22",
+            "price": 843,
+            "originalPrice": 200,
+            "category": "Footwear",
+            "subCategory": "Boots",
+            "brand": "Adidas",
+            "rating": 4.6,
+            "stock": 55,
+            "description": "High-performance running shoe with responsive Boost midsole technology.",
+            "images": [
+              "https://images.unsplash.com/photo-1588099768531-a72d4a198538?w=800&q=80"
+            ],
+            "tags": [
+              "boost",
+              "performance",
+              "adidas"
+            ],
+            "_id": "p2"
+          },
+          "quantity": 1
+        }
+      ],
+      "total": 910.44,
+      "status": "cancelled",
+      "date": "2026-04-24T06:36:47.470Z",
+      "shippingAddress": {
+        "id": 0,
+        "title": "Home",
+        "firstName": "Rishan",
+        "lastName": "k",
+        "address": "adress",
+        "city": "manjeri",
+        "state": "kerala",
+        "zip": "83843"
+      },
+      "paymentMethod": "upi"
     }
   ],
   "wishlist": [],
@@ -5840,7 +6140,8 @@
       "price": "₹2,499",
       "orig": "₹4,199",
       "badge": "Deal",
-      "cls": ""
+      "cls": "",
+      "id": "f7fd"
     },
     {
       "img": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=400",
@@ -5849,7 +6150,8 @@
       "price": "₹1,899",
       "orig": "₹2,999",
       "badge": "New",
-      "cls": "sh-badge-new"
+      "cls": "sh-badge-new",
+      "id": "7097"
     },
     {
       "img": "https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&q=80&w=400",
@@ -5858,7 +6160,8 @@
       "price": "₹3,199",
       "orig": "₹4,299",
       "badge": "Hot",
-      "cls": "sh-badge-hot"
+      "cls": "sh-badge-hot",
+      "id": "70f8"
     },
     {
       "img": "https://images.unsplash.com/photo-1514989940723-e8e51635b782?auto=format&fit=crop&q=80&w=400",
@@ -5867,7 +6170,8 @@
       "price": "₹1,599",
       "orig": "₹2,299",
       "badge": "Deal",
-      "cls": ""
+      "cls": "",
+      "id": "79d0"
     },
     {
       "img": "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&q=80&w=400",
@@ -5876,7 +6180,9 @@
       "price": "₹2,999",
       "orig": "₹3,799",
       "badge": "New",
-      "cls": "sh-badge-new"
+      "cls": "sh-badge-new",
+      "id": "4257"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

@@ -6,11 +6,11 @@ import AdminLayout from "../layout/AdminLayout";
 import AdminDashboard from "../pages/AdminDashboard";
 import AdminProducts from "../pages/AdminProducts";
 import AdminOrders from "../pages/AdminOrders";
-import AdminCarts from "../pages/AdminCarts";
 import AdminUsers from "../pages/AdminUsers";
 import AdminCategories from "../pages/AdminCategories";
 import AdminCoupons from "../pages/AdminCoupons";
 
+//A21  admin access wrapped
 const AdminRoutes = () => {
   return (
     <Routes>
@@ -21,7 +21,6 @@ const AdminRoutes = () => {
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="products" element={<AdminProducts />} />
           <Route path="orders" element={<AdminOrders />} />
-          <Route path="carts" element={<AdminCarts />} />
           <Route path="users" element={<AdminUsers />} />
           <Route path="categories" element={<AdminCategories />} />
           <Route path="coupons" element={<AdminCoupons />} />

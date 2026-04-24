@@ -17,6 +17,8 @@ const initialState = {
   error: null,
 };
 
+//A7 (Admin Auth State: Dashboard access control, and admin profile data persistence handle cheyyunnu)
+
 const adminSlice = createSlice({
   name: "admin",
   initialState,

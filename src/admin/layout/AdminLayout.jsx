@@ -20,7 +20,6 @@ const navItems = [
   { to: "/admin/dashboard", label: "Dashboard", Icon: LayoutDashboard },
   { to: "/admin/products", label: "Products", Icon: Package },
   { to: "/admin/orders", label: "Orders", Icon: ShoppingCart },
-  { to: "/admin/carts", label: "Carts", Icon: ShoppingBag },
   { to: "/admin/users", label: "Users", Icon: Users },
   { to: "/admin/categories", label: "Categories", Icon: Tag },
   { to: "/admin/coupons", label: "Coupons", Icon: Tag },
@@ -33,7 +32,7 @@ const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleLogout = () => {
-    // Manglish: Admin logout aayal shop session-um clear cheyyunnu to keep in sync.
+    // Admin logout aayal shop session-um clear cheyyunnu to keep in sync.
     dispatch(adminLogout());
     dispatch(shopLogout());
     navigate("/admin/login");
@@ -41,12 +40,11 @@ const AdminLayout = () => {
 
   const Sidebar = ({ mobile = false }) => (
     <aside
-      className={`${
-        mobile
+      className={`${mobile
           ? "fixed inset-y-0 left-0 z-50 w-64 transform transition-transform duration-200 " +
-            (sidebarOpen ? "translate-x-0" : "-translate-x-full")
+          (sidebarOpen ? "translate-x-0" : "-translate-x-full")
           : "hidden lg:flex w-64 flex-col"
-      } bg-gray-900 text-white flex flex-col`}
+        } bg-gray-900 text-white flex flex-col`}
     >
       <div className="flex items-center justify-between px-6 py-5 border-b border-gray-700">
         <div className="flex items-center gap-2">
@@ -67,10 +65,9 @@ const AdminLayout = () => {
             to={to}
             onClick={() => setSidebarOpen(false)}
             className={({ isActive }) =>
-              `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                isActive
-                  ? "bg-indigo-600 text-white"
-                  : "text-gray-400 hover:bg-gray-800 hover:text-white"
+              `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${isActive
+                ? "bg-indigo-600 text-white"
+                : "text-gray-400 hover:bg-gray-800 hover:text-white"
               }`
             }
           >

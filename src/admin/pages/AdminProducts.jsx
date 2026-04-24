@@ -1,47 +1,144 @@
-import { useMemo, useState } from "react";
-import { useProducts, useDeleteProduct, useUpdateProduct, useCreateProduct, useCategories } from "../queries/adminQueries";
+import React, { useState, useMemo, useEffect } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import adminApi, { useCategories, useSubcategories } from "../adminShared";
 import { Plus, Pencil, Trash2, Search, Eye, X } from "lucide-react";
+import { toast } from "react-toastify";
 
+// Products fetch cheyyanulla shared hook.
+const useAdminProducts = ({ search, page, limit }) => {
+  return useQuery({
+    queryKey: ["admin", "products", { search, page, limit }],
+    queryFn: async () => {
+      // Backend request ayakkunnu pagination and search filters vechu.
+      const response = await adminApi.get("/admin/products", {
+        params: { q: search, _page: page, _limit: limit },
+      });
+      return {
+        products: response.data,
+        total: parseInt(response.headers["x-total-count"] || 0),
+      };
+    },
+  });
+};
+
+// Puthiya product add cheyyanulla hook.
+const useCreateProduct = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (productData) => {
+      // Backend-ilekku post request ayakkunnu.
+      const { data } = await adminApi.post("/admin/products", productData);
+      return data;
+    },
+    onSuccess: () => {
+      // Success aayaal list reload cheyyunnu.
+      queryClient.invalidateQueries({ queryKey: ["admin", "products"] });
+      toast.success("Product created successfully!");
+    },
+  });
+};
+
+// Product details update cheyyan.
+const useUpdateProduct = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, data }) => {
+      // Particular product update cheyyunnu via put request.
+      const { data: updatedData } = await adminApi.put(`/admin/products/${id}`, data);
+      return updatedData;
+    },
+    onSuccess: () => {
+      // Update kazhinjal frontend state refresh cheyyunnu.
+      queryClient.invalidateQueries({ queryKey: ["admin", "products"] });
+      toast.success("Product updated successfully!");
+    },
+  });
+};
+
+// Product permanently delete cheyyan.
+const useDeleteProduct = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (id) => {
+      // Backend ninnu remove cheyyunnu.
+      await adminApi.delete(`/admin/products/${id}`);
+    },
+    onSuccess: () => {
+      // Delete kazhinjal list refresh cheyyunnu.
+      queryClient.invalidateQueries({ queryKey: ["admin", "products"] });
+      toast.error("Product deleted!");
+    },
+  });
+};
+
+// A33 (Admin Product Workflow: Loads products from backend with search/pagination filters, enables full CRUD operations via TanStack Query mutations)
 const AdminProducts = () => {
-  // Manglish: search + page state manage cheyyan
+  // Page level states (Search, Pagination).
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const [mode, setMode] = useState(null); // view | edit | create
+
+  // Page change cheyyumpol automatically scroll top cheyyunnu.
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [page]);
+
+  // Modal management (View, Edit, Create modes).
+  const [mode, setMode] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
+
+  // Form fields initial state.
   const [form, setForm] = useState({
     name: "",
     price: "",
     stock: "",
     category: "",
+    subCategory: "",
     brand: "",
     description: "",
     image: "",
   });
 
-  // Manglish: backend data query hook
-  const { data, isLoading } = useProducts({ search, page, limit: 10 });
+  // Hooks call cheythu operations handle cheyyunnu.
+  const { data, isLoading } = useAdminProducts({ search, page, limit: 10 });
   const { mutate: deleteProduct } = useDeleteProduct();
   const { mutate: updateProduct, isPending: isUpdating } = useUpdateProduct();
   const { mutate: createProduct, isPending: isCreating } = useCreateProduct();
-  const { data: catData } = useCategories();
-  const catList = catData || [];
 
+  // Categories and Subcategories dropdown-inu vendi fetch cheyyunnu.
+  const { data: catList = [] } = useCategories();
+  const { data: subList = [] } = useSubcategories();
+
+  // Selected category find cheyyunnu to filter subcategories.
+  const selectedCategoryObj = useMemo(() => {
+    return catList.find(c => c.name === form.category);
+  }, [catList, form.category]);
+
+  // Selected category-kkulla subcategories mathram dropdown-il kaanikkunnu.
+  const filteredSubList = useMemo(() => {
+    if (!selectedCategoryObj) return [];
+    return subList.filter(s => s.categoryId === (selectedCategoryObj.id || selectedCategoryObj._id));
+  }, [subList, selectedCategoryObj]);
+
+  // Delete handle function.
   const handleDelete = (id) => {
     if (window.confirm("Delete this product?")) deleteProduct(id);
   };
 
+  // View modal thurakkunnu.
   const openView = (product) => {
     setSelectedProduct(product);
     setMode("view");
   };
 
+  // Edit modal thurakkunnu with existing data.
   const openEdit = (product) => {
     setSelectedProduct(product);
     setForm({
       name: product.name || "",
       price: product.price ?? "",
       stock: product.stock ?? "",
-      category: product.category?.name || "",
+      category: product.category?.name || product.category || "",
+      subCategory: product.subCategory || "",
       brand: product.brand || "",
       description: product.description || "",
       image: product.images?.[0] || "",
@@ -49,6 +146,7 @@ const AdminProducts = () => {
     setMode("edit");
   };
 
+  // Puthiya product create cheyyanulla form thurakkunnu.
   const openCreate = () => {
     setSelectedProduct(null);
     setForm({
@@ -56,6 +154,7 @@ const AdminProducts = () => {
       price: "",
       stock: "",
       category: "",
+      subCategory: "",
       brand: "",
       description: "",
       image: "",
@@ -63,17 +162,20 @@ const AdminProducts = () => {
     setMode("create");
   };
 
+  // Modal close cheyyan.
   const closeModal = () => {
     setMode(null);
     setSelectedProduct(null);
   };
 
+  // Form submission data prepare cheyyunnu.
   const payload = useMemo(
     () => ({
       name: form.name,
       price: Number(form.price || 0),
       stock: Number(form.stock || 0),
       category: form.category,
+      subCategory: form.subCategory,
       brand: form.brand,
       description: form.description,
       images: form.image ? [form.image] : [],
@@ -81,6 +183,7 @@ const AdminProducts = () => {
     [form]
   );
 
+  // Form submit cheyyumpol logic handle cheyyunnu (Create/Edit).
   const handleSubmit = (e) => {
     e.preventDefault();
     if (mode === "edit" && selectedProduct) {
@@ -97,6 +200,7 @@ const AdminProducts = () => {
 
   return (
     <div>
+      {/* Page header with add button. */}
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-gray-800">Products</h1>
         <button
@@ -108,7 +212,8 @@ const AdminProducts = () => {
         </button>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 mb-4">
+      {/* Search filter box. */}
+      <div className="bg-white p-4 mb-4 rounded-xl shadow-sm">
         <div className="relative">
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           <input
@@ -118,12 +223,13 @@ const AdminProducts = () => {
               setPage(1);
             }}
             placeholder="Search products..."
-            className="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400"
+            className="w-full pl-9 pr-4 py-2 bg-gray-50 rounded-lg text-sm focus:outline-none"
           />
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      {/* Products table. */}
+      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
         {isLoading ? (
           <div className="flex justify-center py-12">
             <div className="w-7 h-7 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
@@ -131,7 +237,7 @@ const AdminProducts = () => {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="bg-gray-50 border-b border-gray-100">
+              <thead className="bg-gray-50 border-gray-100">
                 <tr>
                   <th className="text-left px-5 py-3 text-gray-500 font-medium">Product</th>
                   <th className="text-left px-5 py-3 text-gray-500 font-medium">Category</th>
@@ -141,15 +247,17 @@ const AdminProducts = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
+                {/* Products list loop cheyyunnu. */}
                 {data?.products?.map((product) => (
-                  <tr key={product._id || product.id} className="hover:bg-gray-50 transition-colors">
+                  <tr key={product._id || product.id} className="hover:bg-indigo-50 transition-colors">
                     <td className="px-5 py-3">
                       <div className="flex items-center gap-3">
+                        {/* Product image display. */}
                         {product.images?.[0] ? (
                           <img
                             src={product.images[0]}
                             alt={product.name}
-                            className="w-10 h-10 rounded-lg object-cover border border-gray-100"
+                            className="w-10 h-10 rounded-lg object-cover"
                           />
                         ) : (
                           <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center text-gray-400 text-xs">
@@ -159,24 +267,32 @@ const AdminProducts = () => {
                         <span className="font-medium text-gray-700 line-clamp-1">{product.name}</span>
                       </div>
                     </td>
-                    <td className="px-5 py-3 text-gray-500">{product.category?.name || "—"}</td>
+                    <td className="px-5 py-3">
+                      <div className="flex flex-col">
+                        <span className="text-gray-700 font-medium">{product.category?.name || product.category || "—"}</span>
+                        {product.subCategory && (
+                          <span className="text-[10px] text-gray-400 uppercase tracking-wider">{product.subCategory}</span>
+                        )}
+                      </div>
+                    </td>
                     <td className="px-5 py-3 text-gray-700 font-medium">
                       ₹{product.price?.toLocaleString()}
                     </td>
                     <td className="px-5 py-3">
+                      {/* Stock status indicator. */}
                       <span
-                        className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-                          product.stock > 10
+                        className={`text-xs font-medium px-2 py-0.5 rounded-full ${product.stock > 10
                             ? "bg-green-100 text-green-700"
                             : product.stock > 0
                               ? "bg-yellow-100 text-yellow-700"
                               : "bg-red-100 text-red-700"
-                        }`}
+                          }`}
                       >
                         {product.stock > 0 ? `${product.stock} in stock` : "Out of stock"}
                       </span>
                     </td>
                     <td className="px-5 py-3">
+                      {/* Table actions. */}
                       <div className="flex items-center justify-end gap-2">
                         <button
                           onClick={() => openView(product)}
@@ -216,24 +332,47 @@ const AdminProducts = () => {
         )}
       </div>
 
-      {data?.totalPages > 1 && (
-        <div className="flex justify-center gap-2 mt-4">
-          {Array.from({ length: data.totalPages }, (_, i) => i + 1).map((p) => (
+      {/* Pagination controls. */}
+      {data?.total > 10 && (
+        <div className="flex items-center justify-between mt-6 px-2">
+          <p className="text-sm text-gray-500">
+            Showing <span className="font-medium text-gray-700">{data.products.length}</span> of{" "}
+            <span className="font-medium text-gray-700">{data.total}</span> products
+          </p>
+          <div className="flex gap-2">
             <button
-              key={p}
-              onClick={() => setPage(p)}
-              className={`w-8 h-8 rounded-lg text-sm font-medium transition-colors ${
-                p === page
-                  ? "bg-indigo-600 text-white"
-                  : "bg-white text-gray-600 border border-gray-200 hover:border-indigo-300"
-              }`}
+              onClick={() => setPage(p => Math.max(1, p - 1))}
+              disabled={page === 1}
+              className="px-3 py-1 text-sm bg-white border border-gray-200 rounded-lg disabled:opacity-50 hover:bg-indigo-50 transition-colors"
             >
-              {p}
+              Previous
             </button>
-          ))}
+            <div className="flex items-center gap-1">
+              {Array.from({ length: Math.ceil(data.total / 10) }, (_, i) => i + 1).map((p) => (
+                <button
+                  key={p}
+                  onClick={() => setPage(p)}
+                  className={`w-8 h-8 rounded-lg text-sm font-medium transition-colors ${p === page
+                      ? "bg-indigo-600 text-white"
+                      : "bg-white text-gray-600 border border-gray-200 hover:border-indigo-300"
+                    }`}
+                >
+                  {p}
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={() => setPage(p => Math.min(Math.ceil(data.total / 10), p + 1))}
+              disabled={page >= Math.ceil(data.total / 10)}
+              className="px-3 py-1 text-sm bg-white border border-gray-200 rounded-lg disabled:opacity-50 hover:bg-indigo-50 transition-colors"
+            >
+              Next
+            </button>
+          </div>
         </div>
       )}
 
+      {/* Modal form for View/Edit/Create. */}
       {mode && (
         <div
           className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4"
@@ -262,8 +401,11 @@ const AdminProducts = () => {
                   <p className="font-medium text-gray-800">{selectedProduct?.brand || "—"}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500 mb-1">Category</p>
-                  <p className="font-medium text-gray-800">{selectedProduct?.category?.name || "—"}</p>
+                  <p className="text-xs text-gray-500 mb-1">Category / Subcategory</p>
+                  <p className="font-medium text-gray-800">
+                    {selectedProduct?.category?.name || selectedProduct?.category || "—"}
+                    {selectedProduct?.subCategory ? ` / ${selectedProduct.subCategory}` : ""}
+                  </p>
                 </div>
                 <div>
                   <p className="text-xs text-gray-500 mb-1">Price / Stock</p>
@@ -312,13 +454,27 @@ const AdminProducts = () => {
                 <select
                   required
                   value={form.category}
-                  onChange={(e) => setForm((p) => ({ ...p, category: e.target.value }))}
+                  onChange={(e) => setForm((p) => ({ ...p, category: e.target.value, subCategory: "" }))}
                   className="px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white"
                 >
                   <option value="">Select Category</option>
                   {catList.map((c) => (
-                    <option key={c.id} value={c.name}>
+                    <option key={c.id || c._id} value={c.name}>
                       {c.name}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  required
+                  disabled={!form.category}
+                  value={form.subCategory}
+                  onChange={(e) => setForm((p) => ({ ...p, subCategory: e.target.value }))}
+                  className="px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white disabled:bg-gray-50 disabled:text-gray-400"
+                >
+                  <option value="">Select Subcategory</option>
+                  {filteredSubList.map((s) => (
+                    <option key={s.id || s._id} value={s.name}>
+                      {s.name}
                     </option>
                   ))}
                 </select>

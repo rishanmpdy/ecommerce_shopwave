@@ -6,12 +6,14 @@ import { createSlice } from '@reduxjs/toolkit';
 
 
 const loadUserFromStorage = () => {
-  // Manglish: page refresh kazhinjalum user login state pokathe localStorage-il ninnu restore cheyyan helper.
+  // LocalStorage-il ninnu user data read cheyyunnu.
   try {
     const serializedUser = localStorage.getItem('user');
+    // Data illengil null return cheyyunnu.
     if (serializedUser === null) {
       return null;
     }
+    // String data-ye JSON object-lekku convert cheyyunnu.
     return JSON.parse(serializedUser);
   } catch (err) {
     console.error("Could not load user", err);
@@ -23,36 +25,39 @@ const loadUserFromStorage = () => {
 
 
 const initialState = {
-
+  // App start cheyyumpol storage-il ninnu user-ne load cheyyunnu.
   user: loadUserFromStorage(),
+  // User undengil isAuthenticated true aakum.
   isAuthenticated: !!loadUserFromStorage(),
   loading: false,
   error: null,
 };
 
+//A5 (User Auth State: Normal user login status, persistence (localStorage), and session management handle cheyyunnu)
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-  
+
     loginSuccess: (state, action) => {
-      // Manglish: login success aayal Redux state + localStorage randum update cheyyum.
+      // Payload-il ulla user object state-il set cheyyunnu.
       state.user = action.payload;
       state.isAuthenticated = true;
       state.error = null;
+      // Persistent session-u vendi localStorage-ilum store cheyyunnu.
       localStorage.setItem('user', JSON.stringify(action.payload));
     },
-    // Manglish: login fail aayal error message state-il save cheyyum.
     loginFailure: (state, action) => {
+      // Error message store cheyyunnu (UI-il feedback kaanikkan).
       state.loading = false;
       state.error = action.payload;
     },
-    // Manglish: logout aayal user data clear cheythu storage clean cheyyum.
     logout: (state) => {
+      // Ella user details-um Redux-il ninnu remove cheyyunnu.
       state.user = null;
       state.isAuthenticated = false;
+      // Storage tokens clear cheyyunnu.
       localStorage.removeItem('user');
-      // Manglish: Admin storage-um clear cheyyunnu to keep sessions in sync.
       localStorage.removeItem('adminToken');
       localStorage.removeItem('adminData');
     },

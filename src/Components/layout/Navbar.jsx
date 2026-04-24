@@ -7,6 +7,7 @@ import { logout as adminLogout } from '../../admin/store/adminSlice';
 import { selectCartCount } from '../../features/cart/cartSlice';
 import { toast } from 'react-toastify';
 
+//A11 (Navbar Navigation: Search functionality, user profile access, cart count badge, and login/logout routing handle cheyyunnu)
 const Navbar = () => {
   const { user, isAuthenticated } = useSelector(selectAuth);
   const cartItemCount = useSelector(selectCartCount);

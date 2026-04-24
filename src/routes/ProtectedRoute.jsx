@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { selectAuth } from '../features/auth/authSlice';
 
 
+//A17 (Protected Route Guard: Authenticated aayittillatha users-ne login page-ilekku redirect cheyyukayum, login-nu shesham thirichethuvan ulla location save cheyyukayum cheyyunnu)
 const ProtectedRoute = () => {
   const { isAuthenticated } = useSelector(selectAuth);
   const location = useLocation();

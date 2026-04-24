@@ -3,15 +3,16 @@ import { Link } from 'react-router-dom';
 import { FiStar, FiShoppingCart } from 'react-icons/fi';
 
 
+//A10 (Product Card Component: Grid view-il products display cheyyukayum product details-ilekku navigate cheyyukayum cheyyunnu)
 const ProductCard = ({ product }) => {
- 
-  const discount = product.originalPrice 
-    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) 
+  // Price difference vechu discount percentage calculate cheyyunnu.
+  const discount = product.originalPrice
+    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
 
   return (
     <div className="group glass rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full bg-white relative">
-      
+
       {/* Badges */}
       <div className="absolute top-3 left-3 z-10 flex flex-col gap-1">
         {discount > 0 && (
@@ -20,16 +21,16 @@ const ProductCard = ({ product }) => {
           </span>
         )}
         {product.featured && (
-           <span className="bg-primary-600 text-white text-xs font-bold px-2 py-1 rounded-md shadow-sm">
-             Featured
-           </span>
+          <span className="bg-primary-600 text-white text-xs font-bold px-2 py-1 rounded-md shadow-sm">
+            Featured
+          </span>
         )}
       </div>
 
       {/* Image Container with hover zoom effect */}
       <Link to={`/product/${product.id}`} className="block relative h-40 sm:h-56 overflow-hidden bg-slate-50">
-        <img 
-          src={product.images[0]} 
+        <img
+          src={product.images[0]}
           alt={product.name}
           className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
           loading="lazy"
@@ -63,8 +64,8 @@ const ProductCard = ({ product }) => {
               <span className="text-[10px] sm:text-sm text-slate-400 line-through">₹{product.originalPrice.toFixed(2)}</span>
             )}
           </div>
-          
-          <button 
+
+          <button
             className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-primary-600 hover:text-white transition-colors shrink-0"
             title="Add to Cart"
           >
