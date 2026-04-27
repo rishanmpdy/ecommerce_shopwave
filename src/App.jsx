@@ -9,6 +9,7 @@ import { setCart } from './features/cart/cartSlice';
 import api from './api/axios';
 import AdminRoutes from './admin/routes/AdminRoutes';
 
+
 const Home = lazy(() => import('./pages/Home'));
 const Shop = lazy(() => import('./pages/Shop'));
 const Login = lazy(() => import('./pages/Login'));
@@ -66,10 +67,13 @@ function App() {
             <Route path="/admin/*" element={<AdminRoutes />} />
           </Routes>
         </Suspense>
+        
       </main>
       {!isAdminRoute && (
-        <footer className="bg-white border-t py-6 text-center text-sm text-slate-500">
+        <footer className="bg-white py-4 text-center text-sm text-slate-500">
           &copy; {new Date().getFullYear()} ShopWave. All rights reserved.
+       
+    
         </footer>
       )}
     </div>

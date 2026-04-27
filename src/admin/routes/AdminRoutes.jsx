@@ -15,7 +15,7 @@ const AdminRoutes = () => {
   return (
     <Routes>
       <Route path="login" element={<Navigate to="/login" replace />} />
-      <Route element={<AdminProtectedRoute />}>
+      <Route element={<AdminProtectedRoute/>}>
         <Route element={<AdminLayout />}>
           <Route path="/" element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<AdminDashboard />} />

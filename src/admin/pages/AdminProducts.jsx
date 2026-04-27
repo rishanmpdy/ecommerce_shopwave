@@ -17,7 +17,7 @@ const useAdminProducts = ({ search, page, limit }) => {
         products: response.data,
         total: parseInt(response.headers["x-total-count"] || 0),
       };
-    },
+  b    },
   });
 };
 
@@ -339,6 +339,7 @@ const AdminProducts = () => {
             Showing <span className="font-medium text-gray-700">{data.products.length}</span> of{" "}
             <span className="font-medium text-gray-700">{data.total}</span> products
           </p>
+
           <div className="flex gap-2">
             <button
               onClick={() => setPage(p => Math.max(1, p - 1))}
@@ -347,6 +348,7 @@ const AdminProducts = () => {
             >
               Previous
             </button>
+            
             <div className="flex items-center gap-1">
               {Array.from({ length: Math.ceil(data.total / 10) }, (_, i) => i + 1).map((p) => (
                 <button

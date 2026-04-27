@@ -49,11 +49,8 @@ const Cart = () => {
 
       const coupon = data[0];
 
-      // Coupon aarkku vendullaathanu ennu check cheyyunnu (Global or User-specific).
-      const isGlobal = !coupon.userId || coupon.userId === "1" || coupon.userId === 1;
-      const belongsToUser = String(coupon.userId) === String(user.id);
-
-      if (!isGlobal && !belongsToUser) { toast.error('Coupon not valid for your account'); return; }
+      // Everyone can use the coupon now as per requirement.
+      // We still require login to apply coupons (checked above).
 
       // Expiry date check cheyyunnu.
       if (new Date(coupon.expiry) < new Date()) { toast.error('Coupon expired'); return; }

@@ -8,11 +8,12 @@
   "subcategories": [
     {
       "name": "Running Shoes",
-      "id": "sub1"
+      "id": "sub1",
+      "categoryId": "cat1"
     },
     {
-      "id": "sub2",
       "name": "Formal Shoes",
+      "id": "sub2",
       "categoryId": "cat1"
     },
     {
@@ -21,13 +22,18 @@
       "categoryId": "cat1"
     },
     {
-      "id": "sub4",
       "name": "Sandals",
+      "id": "sub4",
       "categoryId": "cat1"
     },
     {
-      "id": "sub5",
       "name": "Slippers",
+      "id": "sub5",
+      "categoryId": "cat1"
+    },
+    {
+      "id": "sub-1777191798327",
+      "name": "sliper",
       "categoryId": "cat1"
     }
   ],
@@ -95,6 +101,14 @@
       "role": "admin",
       "createdAt": "2026-04-21",
       "isActive": true
+    },
+    {
+      "id": "1777202122160",
+      "name": "Rishan",
+      "email": "rishank@gmail.com",
+      "password": "123456",
+      "role": "user",
+      "createdAt": "2026-04-26"
     }
   ],
   "products": [
@@ -894,7 +908,32 @@
     {
       "id": "1776055275332",
       "userId": "1",
-      "items": []
+      "items": [
+        {
+          "product": {
+            "id": "p3",
+            "name": "Puma Velocity Nitro",
+            "price": 1095,
+            "originalPrice": 135,
+            "category": "Footwear",
+            "subCategory": "Formal Shoes",
+            "brand": "Puma",
+            "rating": 4.4,
+            "stock": 65,
+            "description": "Nitrogen-infused foam sole for explosive speed and comfort on every run.",
+            "images": [
+              "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=800&q=80"
+            ],
+            "tags": [
+              "running",
+              "speed",
+              "puma"
+            ],
+            "_id": "p3"
+          },
+          "quantity": 1
+        }
+      ]
     },
     {
       "id": "1776925737659",
@@ -1474,7 +1513,7 @@
         }
       ],
       "total": 140.38920000000002,
-      "status": "Processing",
+      "status": "shipped",
       "date": "2026-04-16T03:57:56.378Z",
       "shippingAddress": {
         "id": 0,
@@ -1630,7 +1669,7 @@
         }
       ],
       "total": 140.38920000000002,
-      "status": "Processing",
+      "status": "delivered",
       "date": "2026-04-16T04:29:33.388Z",
       "shippingAddress": {
         "id": 0,
@@ -1806,7 +1845,7 @@
         }
       ],
       "total": 140.38920000000002,
-      "status": "Processing",
+      "status": "processing",
       "date": "2026-04-16T04:30:53.651Z",
       "shippingAddress": {
         "id": 0,
@@ -2078,7 +2117,7 @@
         }
       ],
       "total": 734.346,
-      "status": "Processing",
+      "status": "processing",
       "date": "2026-04-16T09:01:25.231Z",
       "shippingAddress": {
         "id": 0,
@@ -2218,7 +2257,7 @@
         }
       ],
       "total": 734.346,
-      "status": "Processing",
+      "status": "delivered",
       "date": "2026-04-16T09:01:35.525Z",
       "shippingAddress": {
         "id": 0,
@@ -2306,7 +2345,7 @@
         }
       ],
       "total": 140.38920000000002,
-      "status": "Processing",
+      "status": "shipped",
       "date": "2026-04-16T09:02:22.680Z",
       "shippingAddress": {
         "id": 0,
@@ -2558,7 +2597,7 @@
         }
       ],
       "total": 907.1352,
-      "status": "Processing",
+      "status": "shipped",
       "date": "2026-04-16T11:37:50.492Z",
       "shippingAddress": {
         "id": 0,
@@ -4128,7 +4167,7 @@
         }
       ],
       "total": 140.38920000000002,
-      "status": "delivered",
+      "status": "shipped",
       "date": "2026-04-18T04:54:42.062Z",
       "shippingAddress": {
         "id": 0,
@@ -6020,7 +6059,7 @@
         }
       ],
       "total": 1199.88,
-      "status": "Processing",
+      "status": "processing",
       "date": "2026-04-24T06:22:54.739Z",
       "shippingAddress": {
         "id": 1,
@@ -6077,6 +6116,206 @@
         "zip": "83843"
       },
       "paymentMethod": "upi"
+    },
+    {
+      "id": "1777193945143",
+      "userId": "1",
+      "items": [
+        {
+          "product": {
+            "id": "p3",
+            "name": "Puma Velocity Nitro",
+            "price": 1095,
+            "originalPrice": 135,
+            "category": "Footwear",
+            "subCategory": "Formal Shoes",
+            "brand": "Puma",
+            "rating": 4.4,
+            "stock": 65,
+            "description": "Nitrogen-infused foam sole for explosive speed and comfort on every run.",
+            "images": [
+              "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=800&q=80"
+            ],
+            "tags": [
+              "running",
+              "speed",
+              "puma"
+            ],
+            "_id": "p3"
+          },
+          "quantity": 1
+        }
+      ],
+      "total": 1182.6,
+      "status": "Processing",
+      "date": "2026-04-26T08:59:05.143Z",
+      "shippingAddress": {
+        "id": 0,
+        "title": "Home",
+        "firstName": "Rishan",
+        "lastName": "k",
+        "address": "adress",
+        "city": "manjeri",
+        "state": "kerala",
+        "zip": "83843"
+      },
+      "paymentMethod": "upi"
+    },
+    {
+      "id": "1777193988764",
+      "userId": "1",
+      "items": [
+        {
+          "product": {
+            "id": "p3",
+            "name": "Puma Velocity Nitro",
+            "price": 1095,
+            "originalPrice": 135,
+            "category": "Footwear",
+            "subCategory": "Formal Shoes",
+            "brand": "Puma",
+            "rating": 4.4,
+            "stock": 65,
+            "description": "Nitrogen-infused foam sole for explosive speed and comfort on every run.",
+            "images": [
+              "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=800&q=80"
+            ],
+            "tags": [
+              "running",
+              "speed",
+              "puma"
+            ],
+            "_id": "p3"
+          },
+          "quantity": 1
+        },
+        {
+          "product": {
+            "id": "p2",
+            "name": "Adidas Ultraboost 22",
+            "price": 843,
+            "originalPrice": 200,
+            "category": "Footwear",
+            "subCategory": "Boots",
+            "brand": "Adidas",
+            "rating": 4.6,
+            "stock": 55,
+            "description": "High-performance running shoe with responsive Boost midsole technology.",
+            "images": [
+              "https://images.unsplash.com/photo-1588099768531-a72d4a198538?w=800&q=80"
+            ],
+            "tags": [
+              "boost",
+              "performance",
+              "adidas"
+            ],
+            "_id": "p2"
+          },
+          "quantity": 1
+        }
+      ],
+      "total": 2093.04,
+      "status": "processing",
+      "date": "2026-04-26T08:59:48.764Z",
+      "shippingAddress": {
+        "id": 0,
+        "title": "Home",
+        "firstName": "Rishan",
+        "lastName": "k",
+        "address": "adress",
+        "city": "manjeri",
+        "state": "kerala",
+        "zip": "83843"
+      },
+      "paymentMethod": "upi"
+    },
+    {
+      "id": "1777194080657",
+      "userId": "1",
+      "items": [
+        {
+          "product": {
+            "id": "p38",
+            "name": "Under Armour HOVR Basketball",
+            "price": 129.99,
+            "originalPrice": 155,
+            "category": "Footwear",
+            "subCategory": "Sports Shoes",
+            "brand": "Under Armour",
+            "rating": 4.5,
+            "stock": 40,
+            "description": "HOVR cushioning technology with herringbone traction pattern for court domination.",
+            "images": [
+              "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=800&q=80",
+              "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=800&q=80"
+            ],
+            "tags": [
+              "basketball",
+              "court",
+              "cushion"
+            ]
+          },
+          "quantity": 1
+        }
+      ],
+      "total": 140.38920000000002,
+      "status": "Processing",
+      "date": "2026-04-26T09:01:20.657Z",
+      "shippingAddress": {
+        "id": 0,
+        "title": "Home",
+        "firstName": "Rishan",
+        "lastName": "k",
+        "address": "adress",
+        "city": "manjeri",
+        "state": "kerala",
+        "zip": "83843"
+      },
+      "paymentMethod": "upi"
+    },
+    {
+      "id": "1777201867150",
+      "userId": "1",
+      "items": [
+        {
+          "product": {
+            "id": "p5",
+            "name": "New Balance Fresh Foam 1080",
+            "price": 159.99,
+            "originalPrice": 185,
+            "category": "Footwear",
+            "subCategory": "Running Shoes",
+            "brand": "New Balance",
+            "rating": 4.7,
+            "stock": 38,
+            "description": "Premium daily trainer with plush Fresh Foam X midsole for maximum cushioning.",
+            "images": [
+              "https://images.unsplash.com/photo-1539185441755-769473a23570?w=800&q=80",
+              "https://images.unsplash.com/photo-1556048219-bb6978360b84?w=800&q=80"
+            ],
+            "tags": [
+              "running",
+              "cushion",
+              "premium"
+            ]
+          },
+          "quantity": 6
+        }
+      ],
+      "total": 1036.7352,
+      "status": "Processing",
+      "date": "2026-04-26T11:11:07.150Z",
+      "shippingAddress": {
+        "id": 2,
+        "title": "Home",
+        "firstName": "User",
+        "lastName": "",
+        "address": "",
+        "city": "",
+        "state": "",
+        "zip": ""
+      },
+      "paymentMethod": "cod"
     }
   ],
   "wishlist": [],

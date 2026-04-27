@@ -4,11 +4,14 @@ import adminApi, { useCategories, useSubcategories } from "../adminShared";
 import { Plus, Pencil, Trash2, X, Check, ChevronRight, Hash } from "lucide-react";
 import { toast } from "react-toastify";
 
-// A36 (Admin Category Workflow: Manages the hierarchical relationship between Categories and Subcategories, ensuring data integrity across the product catalog)
+// A36 (Admin Category Workflow: Manages the hierarchical relationship between 
+// Categories and Subcategories, ensuring data integrity across the product catalog)
 
 // Puthiya category create cheyyanulla logic.
 const useCreateCategory = () => {
   const queryClient = useQueryClient();
+
+
   return useMutation({
     mutationFn: async (data) => {
       // Backend-ilekku post request ayakkunnu.
@@ -27,8 +30,8 @@ const useUpdateCategory = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({ id, data }) => {
-      // Particular ID vechu put request ayakkunnu.
-      await adminApi.put(`/admin/categories/${id}`, data);
+      // Particular ID vechu patch request ayakkunnu.
+      await adminApi.patch(`/admin/categories/${id}`, data);
     },
     onSuccess: () => {
       // Update kazhinjal list update cheyyunnu.
@@ -75,7 +78,7 @@ const useUpdateSubcategory = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({ id, data }) => {
-      await adminApi.put(`/admin/subcategories/${id}`, data);
+      await adminApi.patch(`/admin/subcategories/${id}`, data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin", "subcategories"] });
@@ -138,7 +141,8 @@ const AdminCategories = () => {
   const handleCreateCat = (e) => {
     e.preventDefault();
     if (!newCatName.trim()) return;
-    createCat({ id: `cat-${Date.now()}`, name: newCatName.trim(), productCount: 0 }, { onSuccess: () => setNewCatName("") });
+    createCat({ id: `cat-${Date.now()}`, name: newCatName.trim(), productCount: 0 },
+     { onSuccess: () => setNewCatName("") });
   };
 
   // Category update cheyyumpol.
@@ -167,7 +171,7 @@ const AdminCategories = () => {
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-800">Category Management</h1>
-          <p className="text-gray-500 text-sm mt-1">Manage categories and their subcategories.</p>
+          <p className="text-gray-500 text-sm mt-1">Manage categories and subcategories.</p>
         </div>
       </div>
 
@@ -218,7 +222,7 @@ const AdminCategories = () => {
                 <div><h2 className="text-lg font-bold text-gray-800">{activeCategory.name}</h2><p className="text-xs text-gray-500 uppercase tracking-wider font-semibold">Subcategories</p></div>
                 {/* Subcategory create form. */}
                 <form onSubmit={handleCreateSub} className="flex gap-2 w-64">
-                  <input value={newSubName} onChange={(e) => setNewSubName(e.target.value)} placeholder={`New subcategory for ${activeCategory.name}...`} className="flex-1 px-3 py-2 bg-white rounded-lg text-sm focus:outline-none" />
+                  <input value={newSubName} onChange={(e) => setNewSubName(e.target.value)} placeholder={`AddNew Sub ${activeCategory.name}...`} className="flex-1 px-3 py-2 bg-white rounded-lg text-sm focus:outline-none" />
                   <button type="submit" className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-500 transition-colors"><Plus size={16} /></button>
                 </form>
               </div>

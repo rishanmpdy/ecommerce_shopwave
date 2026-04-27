@@ -55,9 +55,12 @@ const useDeleteCoupon = () => {
 };
 
 // Form initial state definition.
-const emptyForm = { code: "", discount: "", type: "percent", minOrder: "", expiry: "", description: "", userId: "" };
+const emptyForm = { code: "", discount: "", type: "percent", minOrder: "", expiry: "", description: "" };
 
-// A34 (Admin Coupon Workflow: Enables the administrative creation, systematic monitoring, and relational assignment of discount tokens, including automated expiry validation and multi-user eligibility management)
+// A34 (Admin Coupon Workflow: Enables the administrative creation,
+//  systematic monitoring, and relational assignment of discount tokens,
+//  including automated expiry validation and multi-user eligibility management)
+
 const AdminCoupons = () => {
   // Local states for search and modal management.
   const [search, setSearch] = useState("");
@@ -75,7 +78,7 @@ const AdminCoupons = () => {
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
     if (!q) return coupons || [];
-    return (coupons || []).filter((c) => String(c.code || "").toLowerCase().includes(q) || String(c.userId || "").toLowerCase().includes(q));
+    return (coupons || []).filter((c) => String(c.code || "").toLowerCase().includes(q));
   }, [coupons, search]);
 
   // Create modal thurakkunnu.
@@ -90,8 +93,7 @@ const AdminCoupons = () => {
       type: coupon.type || "percent",
       minOrder: coupon.minOrder ?? "",
       expiry: coupon.expiry || "",
-      description: coupon.description || "",
-      userId: coupon.userId || ""
+      description: coupon.description || ""
     });
     setShowModal(true);
   };
@@ -105,8 +107,7 @@ const AdminCoupons = () => {
       type: form.type,
       minOrder: Number(form.minOrder || 0),
       expiry: form.expiry,
-      description: form.description,
-      userId: String(form.userId || "").trim()
+      description: form.description
     };
 
     if (!payload.code || !payload.expiry) return;
@@ -153,7 +154,6 @@ const AdminCoupons = () => {
                   <th className="text-left px-5 py-3 text-gray-500 font-medium">Discount</th>
                   <th className="text-left px-5 py-3 text-gray-500 font-medium">Min order</th>
                   <th className="text-left px-5 py-3 text-gray-500 font-medium">Expiry</th>
-                  <th className="text-left px-5 py-3 text-gray-500 font-medium">UserId</th>
                   <th className="text-right px-5 py-3 text-gray-500 font-medium">Actions</th>
                 </tr>
               </thead>
@@ -174,7 +174,6 @@ const AdminCoupons = () => {
                     <td className="px-5 py-3 font-medium">{c.type === "percent" ? `${c.discount}%` : `₹${c.discount}`}</td>
                     <td className="px-5 py-3">{c.minOrder ? `₹${c.minOrder}` : "—"}</td>
                     <td className="px-5 py-3">{c.expiry ? new Date(c.expiry).toLocaleDateString() : "—"}</td>
-                    <td className="px-5 py-3">{c.userId || "—"}</td>
                     <td className="px-5 py-3">
                       <div className="flex items-center justify-end gap-2">
                         <button onClick={() => openEdit(c)} className="p-1.5 text-gray-500 hover:text-indigo-600 rounded-lg"><Pencil size={15} /></button>
@@ -192,7 +191,8 @@ const AdminCoupons = () => {
 
       {/* Coupon edit/create modal form. */}
       {showModal && (
-        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4" onClick={(e) => { if (e.target === e.currentTarget) setShowModal(false); }}>
+        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4" 
+        onClick={(e) => { if (e.target === e.currentTarget) setShowModal(false); }}>
           <div className="w-full max-w-xl bg-white rounded-xl shadow-xl overflow-hidden">
             <div className="px-5 py-4 border-b flex items-center justify-between">
               <h2 className="text-base font-semibold">{editing ? `Edit ${editing.code}` : "Create Coupon"}</h2>
@@ -204,7 +204,6 @@ const AdminCoupons = () => {
               <div><label className="block text-xs font-semibold text-gray-500 mb-1">Discount</label><input value={form.discount} onChange={(e) => setForm((p) => ({ ...p, discount: e.target.value }))} required type="number" className="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none" /></div>
               <div><label className="block text-xs font-semibold text-gray-500 mb-1">Min order (₹)</label><input value={form.minOrder} onChange={(e) => setForm((p) => ({ ...p, minOrder: e.target.value }))} type="number" className="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none" /></div>
               <div><label className="block text-xs font-semibold text-gray-500 mb-1">Expiry</label><input value={form.expiry} onChange={(e) => setForm((p) => ({ ...p, expiry: e.target.value }))} required type="date" className="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none" /></div>
-              <div><label className="block text-xs font-semibold text-gray-500 mb-1">UserId</label><input value={form.userId} onChange={(e) => setForm((p) => ({ ...p, userId: e.target.value }))} className="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none" /></div>
               <div className="md:col-span-2 flex justify-end gap-2 pt-2">
                 <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 rounded-lg border text-sm text-gray-600">Cancel</button>
                 <button disabled={isCreating || isUpdating} type="submit" className="px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-500 disabled:opacity-60">

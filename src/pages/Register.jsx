@@ -6,7 +6,8 @@ import api from '../api/axios';
 import { toast } from 'react-toastify';
 import { FiMail, FiLock, FiUser } from 'react-icons/fi';
 
-//A16 (Register Page: New user creation, email availability check, and automatic login flow handle cheyyunnu)
+//A16 (Register Page: New user creation, email availability check, 
+// and automatic login flow handle cheyyunnu)
 const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -72,7 +73,7 @@ const Register = () => {
                 type="text" 
                 required
                 className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-shadow"
-                placeholder="John Doe"
+                placeholder="Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
